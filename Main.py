@@ -11,11 +11,14 @@ file_types = {}
 
 def file_sort(extension):
    
-    if (extension == "py"):
+    if (extension == "py"):         #checks the extension
+      no_of_py_files = 0            #declare local variable to keep track of number of files
       for item in contents:
-         if item.endswith(".py"):
-            py_files.append(item)
+         if item.endswith(".py"):   #see if file ends with .py
+            py_files.append(item)   
+            no_of_py_files += 1
       print(py_files)
+      file_types["Number of python files"] = no_of_py_files  #adds the number of py files to the dictionary
 
     elif (extension == "txt"):
       print("text files!")
@@ -43,10 +46,10 @@ while True:
 
   extension = input(str("Enter your file extension: "))  #taking the user input
 
-  if (extension in ("py","html","txt","pdf")):    #checking if its a valid exxtention
+  if (extension in ("py","html","txt","pdf")):           #checking if its a valid exxtention
      file_sort(extension)
   elif (extension == "d"):     
-      print(file_types)            #prints the file_types dict
+      print(file_types)                                  #prints the file_types dict
   elif (extension == "exit"):
       print("\nFolder was closed...\n")
       #opens the file again so the user can have a fresh start!
