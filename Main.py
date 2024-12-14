@@ -1,24 +1,48 @@
 import os       #allows me to acces files and folders
 import shutil   #particularly useful for tasks involving file copying, moving, renaming, and removal, as well as handling directories.
 
-folder = input(str("folder location: "))
-contents = os.listdir(folder)
+folder_path = input(str("folder location: "))
+contents = os.listdir(folder_path)
+
+if folder_path != None:
+   folder_path = r"{}".format(folder_path)
+
+py_file_paths = []
 py_files = []
+html_file_paths = []
 html_files = []
-txt_files = []
+txt_file_paths = []
+txt_files =[]
+pdf_file_paths = []
 pdf_files = []
 file_types = {}
 
 def file_sort(extension):
    
-    if (extension == "py"):         #checks the extension
-      no_of_py_files = 0            #declare local variable to keep track of number of files
+    if (extension == "py"):                                                       #checks the extension
+      no_of_py_files = 0                                                          #declare local variable to keep track of number of files
       for item in contents:
-         if item.endswith(".py"):   #see if file ends with .py
-            py_files.append(item)   
+         if item.endswith(".py"):                                                 #see if file ends with .py
+            file_path = os.path.join("{}\\{}").format(folder_path, item)          #saves the path for the python file as a variable
+            py_file_paths.append(file_path) 
+            py_files.append(item)  
             no_of_py_files += 1
-      print(py_files)
-      file_types["Number of python files"] = no_of_py_files  #adds the number of py files to the dictionary
+      #print(py_files)
+      print("\nThere are {} python files in the folder".format(no_of_py_files))   #prints out the number of py files found
+      file_types["Number of python files"] = no_of_py_files                       #adds the number of py files to the dictionary
+
+      if py_files != None:
+         i = 0
+         new_folder_path = os.path.join(folder_path, "Py_files")                  #stores the path of the new folder that to be created as a variable
+         #print(new_folder_path)
+         os.makedirs(new_folder_path, exist_ok=True)                              #creates a new folder to store py files
+         for py_file in py_files:
+            destination_path = os.path.join(new_folder_path, py_file)
+            if os.path.exists(destination_path):
+               print("{}| File already exists!".format(py_file))
+            else:
+               shutil.copyfile(py_file_paths[i], destination_path)                   #copy paste each python file to desired destination
+            i = i + 1                                         
 
     elif (extension == "txt"):
       print("text files!")
